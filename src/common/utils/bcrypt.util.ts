@@ -12,4 +12,4 @@ async function comparePlainToHash(plain: string, hash: string): Promise<boolean>
     return isEqual;
 }
 
-export { hashPlainText };
+export { hashPlainText, comparePlainToHash };
