@@ -57,7 +57,8 @@ export class AuthService {
         // montamos payload para crear JWT
         const payload = {
             id: existingUser.id,
-            username: existingUser.username
+            username: existingUser.username,
+            roles: existingUser.roles
         };
         const token = this._jwt.sign(payload);
 
