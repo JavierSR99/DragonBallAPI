@@ -8,13 +8,14 @@ import { Model, ObjectId, Types } from 'mongoose';
 @Injectable()
 export class SagasService {
 
+  //#region CONSTRUCTOR
   constructor(
     @InjectModel(Saga.name) private readonly sagaModel: Model<Saga>
   ) {}
+  //#endregion
 
-  // new SlugPipe('title')) slug: string
+  //#region CREATION METHODS
   async create(dto: CreateSagaDto) {
-
     const exists = await this.checkExistingSaga(dto.title);
 
     if (exists) {
@@ -24,22 +25,33 @@ export class SagasService {
     const saga = await this.sagaModel.create(dto);
     return saga.toObject();
   }
+  //#endregion
 
-  findAll() {
-    return `This action returns all sagas`;
-  }
-
+  //#region CHECK/GETTERS METHODS
   private async checkExistingSaga(title: string): Promise<boolean>{
     const exists = await this.sagaModel.findOne({title}).exec();
 
     return exists ? true : false;
   }
 
+  async findById(id: string) {
+    const saga = await this.sagaModel.findById(id).lean().exec();
+
+    if (!saga) throw new NotFoundException('Error: saga no encontrada.');
+    
+    return saga;
+  }
+  //#endregion
+
+  //#region UPDATE METHODS
   update(id: number, updateSagasDto: UpdateSagaDto) {
     return `This action updates a #${id} sagas`;
   }
+  //#endregion
 
+  //#region REMOVE METHODS
   remove(id: number) {
     return `This action removes a #${id} sagas`;
   }
+  //#endregion
 }

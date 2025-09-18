@@ -3,11 +3,16 @@ import { SagasService } from './sagas.service';
 import { CreateSagaDto } from './models/dto/create-saga.dto';
 import { UpdateSagaDto } from './models/dto/update-saga.dto';
 import { SlugPipe } from 'src/common/pipes/slug.pipe';
+import { ParseObjectIdPipe } from '@nestjs/mongoose';
 
 @Controller('sagas')
 export class SagasController {
-  constructor(private readonly sagasService: SagasService) {}
 
+  //#region CONSTRUCTOR
+  constructor(private readonly _ss: SagasService) {}
+  //#endregion
+
+  //#region POST METHODS
   @Post('create')
   create(
     @Body('title', new SlugPipe('título')) slug: string,
@@ -16,8 +21,16 @@ export class SagasController {
     if (!dto.slug) {
       dto.slug = slug;
     }
-    return this.sagasService.create(dto)
+    return this._ss.create(dto)
   }
+  //#endregion
+
+  //#region GET METHODS
+  @Get(':id')
+  findOneById(@Param('id', ParseObjectIdPipe) id: string) {
+    return this._ss.findById(id);
+  }
+  //#endregion
 
   // @Get()
   // findAll() {
