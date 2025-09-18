@@ -5,6 +5,7 @@ import { AuthModule } from './resources/auth/auth.module';
 import { UsersModule } from './resources/users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { SagasModule } from './resources/sagas/sagas.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true
     }),
     MongooseModule.forRoot(process.env.DB_URI!),
-    UsersModule
+    // UsersModule,
+    SagasModule
   ],
   controllers: [AppController],
   providers: [AppService],
