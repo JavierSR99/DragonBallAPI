@@ -4,6 +4,7 @@ import { CreateSagaDto } from './models/dto/create-saga.dto';
 import { UpdateSagaDto } from './models/dto/update-saga.dto';
 import { SlugPipe } from 'src/common/pipes/slug.pipe';
 import { ParseObjectIdPipe } from '@nestjs/mongoose';
+import { SlugField } from 'src/common/decorators/slug-field.decorator';
 
 @Controller('sagas')
 export class SagasController {
@@ -15,7 +16,7 @@ export class SagasController {
   //#region POST METHODS
   @Post('create')
   create(
-    @Body('title', new SlugPipe('título')) slug: string,
+    @SlugField('title') slug: string,
     @Body() dto: CreateSagaDto
   ) {
     if (!dto.slug) {
