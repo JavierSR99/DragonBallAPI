@@ -1,9 +1,9 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSagaDto } from './models/dto/create-saga.dto';
 import { UpdateSagaDto } from './models/dto/update-saga.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Saga } from './models/saga.schema';
-import { Model, ObjectId, Types } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 @Injectable()
 export class SagasService {
@@ -18,9 +18,7 @@ export class SagasService {
   async create(dto: CreateSagaDto) {
     const exists = await this.checkExistingSaga(dto.title);
 
-    if (exists) {
-      throw new BadRequestException('Saga ya existente.');
-    } 
+    if (exists) throw new ConflictException('Saga ya existente.');
 
     const saga = await this.sagaModel.create(dto);
     return saga.toObject();

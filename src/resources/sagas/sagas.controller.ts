@@ -1,8 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { SagasService } from './sagas.service';
 import { CreateSagaDto } from './models/dto/create-saga.dto';
-import { UpdateSagaDto } from './models/dto/update-saga.dto';
-import { SlugPipe } from 'src/common/pipes/slug.pipe';
 import { ParseObjectIdPipe } from '@nestjs/mongoose';
 import { SlugField } from 'src/common/decorators/slug-field.decorator';
 
