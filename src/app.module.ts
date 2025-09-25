@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SagasModule } from './resources/sagas/sagas.module';
 import { PlanetsModule } from './resources/planets/planets.module';
 import { RacesModule } from './resources/races/races.module';
+import { CharactersModule } from './resources/characters/characters.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { RacesModule } from './resources/races/races.module';
     // UsersModule,
     SagasModule,
     PlanetsModule,
-    RacesModule
+    RacesModule,
+    CharactersModule
   ],
   controllers: [AppController],
   providers: [AppService],

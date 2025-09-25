@@ -11,7 +11,7 @@ export class Race {
     @Prop({trim: true})
     description?: string;
 
-    @Prop({ type: Types.ObjectId, ref: 'Planets' })
+    @Prop({ type: Types.ObjectId, ref: 'Planet' })
     planet: string;
 
     @Prop({unique: true, index: true})
