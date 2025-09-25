@@ -9,6 +9,7 @@ import { SagasModule } from './resources/sagas/sagas.module';
 import { PlanetsModule } from './resources/planets/planets.module';
 import { RacesModule } from './resources/races/races.module';
 import { CharactersModule } from './resources/characters/characters.module';
+import { TransformationsModule } from './resources/transformations/transformations.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { CharactersModule } from './resources/characters/characters.module';
     SagasModule,
     PlanetsModule,
     RacesModule,
-    CharactersModule
+    CharactersModule,
+    TransformationsModule
   ],
   controllers: [AppController],
   providers: [AppService],

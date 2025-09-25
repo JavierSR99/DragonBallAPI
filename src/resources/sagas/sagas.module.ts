@@ -3,6 +3,7 @@ import { SagasService } from './sagas.service';
 import { SagasController } from './sagas.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Saga, SagaSchema } from './models/saga.schema';
+import { SagasRepository } from './sagas.repository';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { Saga, SagaSchema } from './models/saga.schema';
     ])
   ],
   controllers: [SagasController],
-  providers: [SagasService],
+  providers: [SagasService, SagasRepository],
+  exports: [SagasRepository]
 })
 export class SagasModule {}

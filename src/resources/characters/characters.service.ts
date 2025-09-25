@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { CreateCharacterDto } from './models/dto/create-character.dto';
 import { UpdateCharacterDto } from './models/dto/update-character.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -26,7 +26,7 @@ export class CharactersService {
 
     // Comprobamos existencia de personaje en saga
     const exists = await this.checkExistingCharacter(dto);
-    if (exists) throw new BadRequestException('El personaje ya existe en la/s saga/s selecionada/s');
+    if (exists) throw new ConflictException('El personaje ya existe en la/s saga/s selecionada/s');
     
     // Comprobamos que las sagas del personaje existan
     const missingSagas = await this.checkExistingSagas(dto);
