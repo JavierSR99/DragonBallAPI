@@ -10,6 +10,7 @@ import { PlanetsModule } from './resources/planets/planets.module';
 import { RacesModule } from './resources/races/races.module';
 import { CharactersModule } from './resources/characters/characters.module';
 import { TransformationsModule } from './resources/transformations/transformations.module';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { TransformationsModule } from './resources/transformations/transformatio
     PlanetsModule,
     RacesModule,
     CharactersModule,
-    TransformationsModule
+    TransformationsModule,
+    SharedModule
   ],
   controllers: [AppController],
   providers: [AppService],

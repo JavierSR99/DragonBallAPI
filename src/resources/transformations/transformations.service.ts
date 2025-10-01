@@ -5,8 +5,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Transformation } from './models/transformation.schema';
 import { Model } from 'mongoose';
 import { Character } from '../characters/models/character.schema';
+import { RefCheckService } from 'src/shared/validation/ref-check/ref-check.service';
 import { Saga } from '../sagas/models/saga.schema';
-import { SagasRepository } from '../sagas/sagas.repository';
 
 @Injectable()
 export class TransformationsService {
@@ -15,7 +15,8 @@ export class TransformationsService {
   constructor(
     @InjectModel(Transformation.name) private readonly transformationModel: Model<Transformation>,
     @InjectModel(Character.name) private readonly characterModel: Model<Character>,
-    private readonly sagasRepository: SagasRepository
+    @InjectModel(Saga.name) private readonly sagaModel: Model<Saga>,
+    private readonly _rfs: RefCheckService
   ) {}
   //#endregion
 
@@ -23,8 +24,8 @@ export class TransformationsService {
   async create(dto: CreateTransformationDto) {
 
     const [characterExists, missingSagas, existing] = await Promise.all([
-      this.checkExistingCharacter(dto.character),
-      this.sagasRepository.checkMissingSagaIds(dto.sagas),
+      this._rfs.exists(this.characterModel, dto.character),
+      this._rfs.ensureAllExist(this.sagaModel, dto.sagas),
       this.transformationModel.exists({name: dto.name})
     ]);
 
@@ -39,27 +40,4 @@ export class TransformationsService {
   }
   //#endregion
 
-  //#region GET/CHECK METHODS
-  private async checkExistingCharacter(id: string): Promise<Character | null> {
-    const character = await this.characterModel.findById(id);
-    return character;
-  }
-
-  //#endregion
-
-  // findAll() {
-  //   return `This action returns all transformations`;
-  // }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} transformation`;
-  // }
-
-  // update(id: number, updateTransformationDto: UpdateTransformationDto) {
-  //   return `This action updates a #${id} transformation`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} transformation`;
-  // }
 }
